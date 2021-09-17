@@ -1,15 +1,17 @@
 const mysql = require('mysql');
 const express = require('express');
 const bodyParser = require('body-parser');
+const dbconf=require('./configurations/db.conf');
+
 
 var app = express();
 app.use(bodyParser.json());
 
 var mysqlConnection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Sucely31",
-    database: "escuela"
+   host: dbconf.host, 
+    user:dbconf.user,
+    password: dbconf.password,
+    database: dbconf.database
 });
 
 
@@ -84,7 +86,7 @@ app.delete("/estudiantes/:id", (req, res) => {
             if (!err) {
                 console.log(result);
                 
-                res.status(202).send("deleted");
+                res.status(202).send("Deleted Successfully");
             } else {
                 console.log(err);
                 res.send('error' + err);
@@ -94,4 +96,4 @@ app.delete("/estudiantes/:id", (req, res) => {
 
 
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
